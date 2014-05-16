@@ -18,6 +18,7 @@
     <!-- Angular app! -->
     <script type="text/javascript" src="js/Default.js"></script>
     <script type="text/javascript" src="js/controllers/ApplicationController.js"></script>
+    <script type="text/javascript" src="js/controllers/NotepadController.js"></script>
     <script type="text/javascript" src="js/directives/Notepad.js"></script>
 
 </head>
@@ -25,7 +26,13 @@
 
     <h1 class="logo">Type.ee</h1>
 
-    <textarea class="notepad" data-notepad></textarea>
+    <section ng-controller="NotepadController">
+
+        {{text}}
+
+        <textarea class="notepad" data-notepad="text"></textarea>
+
+    </section>
 
 </body>
 </html>

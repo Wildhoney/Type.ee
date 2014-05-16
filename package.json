@@ -1,0 +1,19 @@
+{
+  "name": "Type.ee",
+  "version": "0.1.0",
+  "description": "Source for Type.ee.",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Wildhoney/Type.ee.git"
+  },
+  "author": "Adam Timberlake <adam.timberlake@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wildhoney/Type.ee/issues"
+  },
+  "homepage": "https://github.com/Wildhoney/Type.ee"
+}

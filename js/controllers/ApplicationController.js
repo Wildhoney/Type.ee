@@ -7,11 +7,11 @@
      */
     $app.controller('ApplicationController', ['$scope', function applicationController($scope) {
 
-        var socket = io.connect('http://localhost');
-
-        socket.on('connection/session/id', function onSessionId(sessionId) {
-            console.log(sessionId);
-        });
+        /**
+         * @property socket
+         * @type {Object}
+         */
+        $scope.socket = io.connect('http://localhost');
 
     }]);
 

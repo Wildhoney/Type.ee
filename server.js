@@ -12,7 +12,7 @@
         server      = require('http').createServer(app),
         io          = require('socket.io').listen(server),
         redis       = require('redis'),
-//        client      = redis.createClient(),
+        client      = redis.createClient(),
         crypto      = require('crypto'),
         q           = require('q');
 
@@ -20,33 +20,49 @@
     app.use(express.static(__dirname));
     server.listen($process.env.PORT || 3501);
 
-    /**
-     * @method generateSessionId
-     * @return {q.promise}
-     */
-    var generateSessionId = function generateSessionId() {
+    io.sockets.on('connection', function connection(socket) {
 
-        var deferred = q.defer();
+        /**
+         * @method createSession
+         * @return {q.promise}
+         */
+        var createSession = function createSession() {
 
-        crypto.randomBytes(256, function(ex, buf) {
+            var deferred = q.defer();
 
-            // Generate a SHA256 string from the random bytes.
-            var sessionId = crypto.createHash('sha256').update(buf).digest('hex');
-            deferred.resolve(sessionId);
+            crypto.randomBytes(256, function(ex, buf) {
+
+                // Generate a SHA256 string from the random bytes.
+                var sessionId = crypto.createHash('sha256').update(buf).digest('hex');
+                deferred.resolve(sessionId);
+
+            });
+
+            return deferred.promise;
+
+        };
+
+        // Establish a new session.
+        socket.on('session/create', function sessionCreate() {
+
+            createSession().then(function then(sessionId) {
+                socket.emit('session/id', sessionId);
+            });
 
         });
 
-        return deferred.promise;
+        // When the session needs to be retrieved.
+        socket.on('session/fetch', function sessionFetch(params) {
 
-    };
+            client.hget('type', params.sessionId, function(error, text) {
+                socket.emit('session/text', text || '');
+            });
 
-    io.sockets.on('connection', function connection(socket) {
+        });
 
-        generateSessionId().then(function then(sessionId) {
-
-            // Emit the session ID that the user will use.
-            socket.emit('connection/session/id', sessionId);
-
+        // When the text has been pushed.
+        socket.on('session/save', function sessionSave(params) {
+            client.hset('type', params.sessionId, params.text);
         });
 
     });

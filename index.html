@@ -26,9 +26,13 @@
 
     <h1 class="logo">Type.ee</h1>
 
+    <label ng-hide="sessionId">Loading...</label>
+
+    Using {{sessionId}}
+
     <section class="notepad" ng-controller="NotepadController">
 
-        <textarea class="notepad" data-notepad="text"></textarea>
+        <textarea class="notepad" ng-model="text" data-notepad="text" data-save="save({ text: text })"></textarea>
 
     </section>
 

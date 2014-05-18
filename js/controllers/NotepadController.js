@@ -15,22 +15,22 @@
 
         /**
          * @method save
-         * @param text {String}
-         * @param sessionId {String}
+         * @param params {Object}
          * @return {void}
          */
-        $scope.save = function save(text, sessionId) {
-            $scope.socket.emit('text/save', { sessionId: sessionId, text: $scope.text });
+        $scope.save = function save(params) {
+
+            $scope.socket.emit('session/save', {
+                sessionId: $scope.sessionId,
+                text:      params.text
+            });
+
         };
 
-        // When we've received the session ID from the Node.js backend.
-        $scope.socket.on('connection/session/id', function onSessionId(sessionId) {
-
-            // Initially save the text from the local storage.
-            if ($scope.text) {
-                $scope.save($scope.text, sessionId);
-            }
-
+        // Once we've retrieved the data from the session.
+        $scope.socket.on('session/text', function sessionText(text) {
+            $scope.text = text;
+            $scope.$apply();
         });
 
     }]);

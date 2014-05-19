@@ -3,6 +3,7 @@
     var gulp    = require('gulp'),
         less    = require('gulp-less'),
         concat  = require('gulp-concat'),
+        jshint  = require('gulp-jshint'),
         path    = require('path');
 
     gulp.task('less', function beginGulpLess() {
@@ -14,6 +15,12 @@
             .pipe(concat('default.css'))
             .pipe(gulp.dest(path.join(__dirname, 'css')))
 
+    });
+
+    gulp.task('lint', function() {
+        return gulp.src(['js/controllers/*.js', 'js/directives/*.js', 'js/Default.js'])
+            .pipe(jshint())
+            .pipe(jshint.reporter('default'));
     });
 
     gulp.task('default', [], function() {

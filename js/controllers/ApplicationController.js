@@ -5,7 +5,9 @@
      * @author Adam Timberlake
      * @controller ApplicationController
      */
-    $app.controller('ApplicationController', ['$scope', function applicationController($scope) {
+    $app.controller('ApplicationController', ['$scope', '$location',
+
+    function applicationController($scope, $location) {
 
         /**
          * @constant STORAGE_NAME
@@ -31,8 +33,16 @@
 
             if ($scope.popSession()) {
 
-                // Use the session already saved if we can.
-                $scope.sessionId = $scope.popSession();
+                // Use the session ID defined in the URL, if it exists, otherwise attempt to use the first
+                // one we come across in the local storage.
+                $scope.sessionId = $location.search()['session'] || $scope.popSession();
+
+                if ($location.search()['session']) {
+
+                    // Remove the session ID from the URL as we already have it.
+                    $location.search('session', null);
+
+                }
 
                 $scope.socket.emit('session/fetch', {
                     sessionId: $scope.sessionId

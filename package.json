@@ -1,10 +1,13 @@
 {
-  "name": "Type.ee",
+  "name": "type.ee",
   "version": "0.1.0",
   "description": "Source for Type.ee.",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "gulp lint",
+    "start": "server.js",
+    "preinstall": "npm install --ignore-scripts",
+    "postinstall": "bower install; gulp"
   },
   "repository": {
     "type": "git",

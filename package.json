@@ -24,9 +24,11 @@
     "gulp-concat": "^2.2.0",
     "gulp-jshint": "^1.6.1",
     "gulp-less": "^1.2.3",
+    "gulp-ng-constant": "^0.1.0",
     "q": "^1.0.1",
     "qr": "^0.2.3",
     "redis": "^0.10.1",
-    "socket.io": "^0.9.16"
+    "socket.io": "^0.9.16",
+    "yamljs": "^0.1.5"
   }
 }

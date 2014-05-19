@@ -15,6 +15,7 @@
         client      = redis.createClient(),
         crypto      = require('crypto'),
         q           = require('q'),
+        yaml        = require('yamljs'),
         Encoder     = require('qr').Encoder,
         encoder     = new Encoder;
 
@@ -49,8 +50,10 @@
 
             createSession().then(function then(sessionId) {
 
+                var config = yaml.load('config.yml');
+
                 // Create the QR code to inherit the session.
-                var data = 'http://localhost:3501/#?session=' + sessionId;
+                var data = config.website_url + '#?session=' + sessionId;
                 encoder.encode(data, __dirname + '/images/' + sessionId + '.png');
 
                 socket.emit('session/id', sessionId);

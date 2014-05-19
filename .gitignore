@@ -1,4 +1,8 @@
 /.idea
 /node_modules
+
 /js/vendor/*
 !/js/vendor/.gitkeep
+
+/images/*
+!/images/.gitkeep

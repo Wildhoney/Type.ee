@@ -1,10 +1,11 @@
 (function beginGulp() {
 
-    var gulp    = require('gulp'),
-        less    = require('gulp-less'),
-        concat  = require('gulp-concat'),
-        jshint  = require('gulp-jshint'),
-        path    = require('path');
+    var gulp       = require('gulp'),
+        less       = require('gulp-less'),
+        concat     = require('gulp-concat'),
+        jshint     = require('gulp-jshint'),
+        ngConstant = require('gulp-ng-constant'),
+        path       = require('path');
 
     gulp.task('less', function beginGulpLess() {
 

@@ -25,6 +25,7 @@
 
     gulp.task('default', [], function() {
         gulp.start('less');
+        gulp.start('lint');
     });
 
 })();

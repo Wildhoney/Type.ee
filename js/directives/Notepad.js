@@ -1,4 +1,4 @@
-(function($app, $localStorage) {
+(function($app) {
 
     /**
      * @module Type.ee
@@ -21,7 +21,8 @@
              */
             scope: {
                 text: '=notepad',
-                save: '&save'
+                save: '&save',
+                loaded: '=loaded'
             },
 
             /**
@@ -37,10 +38,22 @@
                     scope.$apply();
                 });
 
+                // Invoked when we've changed the status of the loading.
+                scope.$watch('loaded', function hasLoaded(value) {
+
+                    if (value) {
+
+                        // Focus on the textarea element once we've loaded the session.
+                        element[0].focus();
+
+                    }
+
+                });
+
             }
 
         }
 
     });
 
-})(window.typeApp, window.localStorage);
+})(window.typeApp);

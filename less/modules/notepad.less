@@ -1,6 +1,7 @@
 section.notepad {
     height: 100%;
     width: 100%;
+    pointer-events: none;
 
     textarea.notepad {
         width: 100%;
@@ -13,4 +14,12 @@ section.notepad {
         outline: none;
         background-color: transparent;
     }
+}
+
+body.loaded {
+
+    section.notepad {
+        pointer-events: all;
+    }
+
 }

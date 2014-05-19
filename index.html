@@ -3,7 +3,7 @@
 <head>
 
     <title></title>
-    
+
     <!-- Fonts! -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans&subset=cyrillic-ext,latin,latin-ext,cyrillic,greek-ext,greek,vietnamese" rel="stylesheet" type="text/css">
 
@@ -22,17 +22,18 @@
     <script type="text/javascript" src="js/directives/Notepad.js"></script>
 
 </head>
-<body ng-app="typeApp" ng-controller="ApplicationController">
+<body ng-app="typeApp" ng-controller="ApplicationController" ng-class="{ loaded: sessionId }">
 
     <h1 class="logo">Type.ee</h1>
 
-    <label ng-hide="sessionId">Loading...</label>
-
-    Using {{sessionId}}
+    <label class="loading">Loading...</label>
 
     <section class="notepad" ng-controller="NotepadController">
 
-        <textarea class="notepad" ng-model="text" data-notepad="text" data-save="save({ text: text })"></textarea>
+        <textarea class="notepad" ng-model="text"
+                  data-notepad="text"
+                  data-loaded="!!sessionId"
+                  data-save="save({ text: text })"></textarea>
 
     </section>
 

@@ -8,3 +8,28 @@ body, html {
     width: 100%;
     height: 100%;
 }
+
+label.loading {
+    background-color: rgba(0, 0, 0, .05);
+    font-family: Arial, Tahoma, Helvetica, sans-serif;
+    color: rgba(0, 0, 0, .5);
+    font-size: 11px;
+    width: 100%;
+    position: absolute;
+    padding: 0 8px;
+    height: 25px;
+    line-height: 25px;
+    -webkit-transition: margin-top 1s;
+    -moz-transition: margin-top 1s;
+    -ms-transition: margin-top 1s;
+    -o-transition: margin-top 1s;
+    transition: margin-top 1s;
+}
+
+body.loaded {
+
+    label.loading {
+        margin-top: -25px;
+    }
+
+}

@@ -25,6 +25,41 @@
          */
         $scope.sessionId = '';
 
+        // When the connection has been established we'll either use the existing session ID, or create
+        // a new one.
+        $scope.socket.on('connect', function onConnection() {
+
+            if ($scope.popSession()) {
+
+                // Use the session already saved if we can.
+                $scope.sessionId = $scope.popSession();
+
+                $scope.socket.emit('session/fetch', {
+                    sessionId: $scope.sessionId
+                });
+
+                $scope.$apply();
+                return;
+
+            }
+
+            // Otherwise we'll create a brand-new session!
+            $scope.socket.emit('session/create');
+
+        });
+
+        // When the session ID has changed.
+        $scope.$watch('sessionId', function useSessionId(value) {
+            $scope.socket.emit('session/use', value);
+        });
+
+        // Server has sent us back the session ID!
+        $scope.socket.on('session/id', function getSessionId(sessionId) {
+            $scope.pushSession(sessionId);
+            $scope.sessionId = sessionId;
+            $scope.$apply();
+        });
+
         /**
          * @method pushSession
          * @param sessionId {String}
@@ -51,36 +86,6 @@
             var storage = $localStorage.getItem(STORAGE_NAME) || [];
             return (storage) ? $angular.fromJson(storage).pop() : false;
         };
-
-        // When the connection has been established we'll either use the existing session ID, or create
-        // a new one.
-        $scope.socket.on('connect', function onConnection() {
-
-            if ($scope.popSession()) {
-
-                // Use the session already saved if we can.
-                $scope.sessionId = $scope.popSession();
-
-                $scope.socket.emit('session/fetch', {
-                    sessionId: $scope.sessionId
-                });
-
-                $scope.$apply();
-                return;
-
-            }
-
-            // Otherwise we'll create a brand-new session!
-            $scope.socket.emit('session/create');
-
-        });
-
-        // Server has sent us back the session ID!
-        $scope.socket.on('session/id', function getSessionId(sessionId) {
-            $scope.pushSession(sessionId);
-            $scope.sessionId = sessionId;
-            $scope.$apply();
-        });
 
     }]);
 

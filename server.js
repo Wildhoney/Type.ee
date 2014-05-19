@@ -60,9 +60,15 @@
 
         });
 
+        // When the client has requested to use a particular session.
+        socket.on('session/use', function sessionUse(sessionId) {
+            socket.join(sessionId);
+        });
+
         // When the text has been pushed.
         socket.on('session/save', function sessionSave(params) {
             client.hset('type', params.sessionId, params.text);
+            socket.broadcast.to(params.sessionId).emit('session/text', params.text);
         });
 
     });

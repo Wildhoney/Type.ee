@@ -8,7 +8,7 @@
 
     gulp.task('less', function beginGulpLess() {
 
-        gulp.src('./less/**/*.less')
+        return gulp.src('./less/**/*.less')
             .pipe(less({
                 paths: [ path.join(__dirname, 'less') ]
             }))
@@ -17,7 +17,7 @@
 
     });
 
-    gulp.task('lint', function() {
+    gulp.task('lint', function beginGulpLint() {
         return gulp.src(['js/controllers/*.js', 'js/directives/*.js', 'js/Default.js'])
             .pipe(jshint())
             .pipe(jshint.reporter('default'));

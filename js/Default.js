@@ -9,6 +9,10 @@
             templateUrl : 'partials/qr.html'
         });
 
+        $routeProvider.when('/share/url', {
+            templateUrl : 'partials/url.html'
+        });
+
     }]);
 
 })(window, window.angular);

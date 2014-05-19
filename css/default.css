@@ -105,3 +105,13 @@ section.task div.row div.cell div.view p {
   color: rgba(0, 0, 0, 0.55);
   font-size: 12px;
 }
+
+section.task section.url input {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.045);
+  outline: none;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 12px;
+  border: 0;
+}

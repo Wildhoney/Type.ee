@@ -22,6 +22,7 @@
              */
             link: function link(scope, element) {
 
+                // Create the element and append it to the container.
                 var closeNode = $angular.element('<a class="close-modal" href="#/">&times;</a>');
                 element.append(closeNode);
 

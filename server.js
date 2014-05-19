@@ -33,10 +33,14 @@
 
             var deferred = q.defer();
 
-            crypto.randomBytes(256, function(ex, buf) {
+            crypto.randomBytes(256, function(error, buffer) {
+
+                if (error) {
+                    throw error;
+                }
 
                 // Generate a SHA256 string from the random bytes.
-                var sessionId = crypto.createHash('sha256').update(buf).digest('hex');
+                var sessionId = crypto.createHash('sha256').update(buffer).digest('hex');
                 deferred.resolve(sessionId);
 
             });
@@ -56,7 +60,13 @@
                 var data = config.website_url + '#?session=' + sessionId;
                 encoder.encode(data, __dirname + '/images/' + sessionId + '.png');
 
-                socket.emit('session/id', sessionId);
+                encoder.on('end', function() {
+
+                    // Once the PNG has been written we'll emit the session ID.
+                    socket.emit('session/id', sessionId);
+
+                });
+
 
             });
 

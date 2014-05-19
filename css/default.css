@@ -28,14 +28,11 @@ body.loaded label.loading {
   margin-top: -25px;
 }
 
-h1.logo {
-  pointer-events: none;
-  letter-spacing: -2px;
+section.dashboard {
   font-weight: 800;
   font-family: "Open Sans", sans-serif;
-  font-size: 45px;
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: 20px;
   color: rgba(0, 0, 0, 0.05);
 }
@@ -58,4 +55,53 @@ section.notepad textarea.notepad {
 }
 body.loaded section.notepad {
   pointer-events: all;
+}
+
+section.task {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
+  pointer-events: none;
+}
+section.task div.row {
+  display: table-row;
+  height: 100%;
+  margin: auto;
+}
+section.task div.row div.cell {
+  padding: 30px;
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+}
+section.task div.row div.cell div.view {
+  pointer-events: all;
+  text-align: left;
+  padding: 20px;
+  display: inline-block;
+  position: relative;
+  -webkit-box-shadow: 0 0 120px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 0 120px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 120px rgba(0, 0, 0, 0.25);
+}
+section.task div.row div.cell div.view a.close-modal {
+  position: absolute;
+  font-size: 20px;
+  top: 0;
+  right: 10px;
+}
+section.task div.row div.cell div.view h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  padding-bottom: 10px;
+  font-weight: 1000;
+  margin: 0;
+}
+section.task div.row div.cell div.view p {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 12px;
 }

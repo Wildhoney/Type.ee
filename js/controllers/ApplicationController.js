@@ -35,9 +35,9 @@
 
                 // Use the session ID defined in the URL, if it exists, otherwise attempt to use the first
                 // one we come across in the local storage.
-                $scope.sessionId = $location.search()['session'] || $scope.popSession();
+                $scope.sessionId = $location.search().session || $scope.popSession();
 
-                if ($location.search()['session']) {
+                if ($location.search().session) {
 
                     // Remove the session ID from the URL as we already have it.
                     $location.search('session', null);

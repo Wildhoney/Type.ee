@@ -14,7 +14,9 @@
         redis       = require('redis'),
         client      = redis.createClient(),
         crypto      = require('crypto'),
-        q           = require('q');
+        q           = require('q'),
+        Encoder     = require('qr').Encoder,
+        encoder     = new Encoder;
 
     // Begin Express so the statistics are available from the `localPort`.
     app.use(express.static(__dirname));
@@ -46,7 +48,13 @@
         socket.on('session/create', function sessionCreate() {
 
             createSession().then(function then(sessionId) {
+
+                // Create the QR code to inherit the session.
+                var data = 'http://localhost:3501/#?session=' + sessionId;
+                encoder.encode(data, __dirname + '/images/' + sessionId + '.png');
+
                 socket.emit('session/id', sessionId);
+
             });
 
         });

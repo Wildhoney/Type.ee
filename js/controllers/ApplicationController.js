@@ -19,7 +19,7 @@
          * @property socket
          * @type {Object}
          */
-        $scope.socket = io.connect('http://localhost');
+        $scope.socket = io.connect();
 
         /**
          * @property sessionId

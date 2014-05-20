@@ -15,8 +15,7 @@
         crypto      = require('crypto'),
         q           = require('q'),
         yaml        = require('yamljs'),
-        Encoder     = require('qr').Encoder,
-        encoder     = new Encoder,
+        encoder     = new require('qr').Encoder,
         client      = {};
 
     // Create the Redis client.
@@ -24,13 +23,13 @@
         
         // Client for Heroku.
         var rtg = require('url').parse(process.env.REDISTOGO_URL);
-        client  = require('redis').createClient(rtg.port, rtg.hostname);
+        client  = redis.createClient(rtg.port, rtg.hostname);
         client.auth(rtg.auth.split(':')[1]);
         
     } else {
         
         // Client for development.
-        client = require("redis").createClient();
+        client = redis.createClient();
         
     }
 

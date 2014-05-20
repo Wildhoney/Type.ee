@@ -13,5 +13,5 @@ deploy:
   api_key:
     secure: iVClImqtbTBvx41NX2ywP5dWjBwuma+6BsZzdIITT4KQ1X0DHza0iNXXe4J4VzlHsuJ6hlJJJRmGkFmfHqgBNgub+fKVpkdbesLyMYV3cj8mHcX7mQUwp6lyBJfEwvjIbwet69bb5E3tXzIxRdLwqq1NuRdBc5rHwTlfUtS8JDY=
   app: type-ee
-    on:
-      repo: Wildhoney/Type.ee
+  on:
+    repo: Wildhoney/Type.ee

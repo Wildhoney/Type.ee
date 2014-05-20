@@ -3,7 +3,7 @@
  * @author Adam Timberlake
  * @link http://github.com/Wildhoney/Type.ee
  */
-(function($process) {
+(function($process, $environment) {
 
     "use strict";
 
@@ -12,12 +12,27 @@
         server      = require('http').createServer(app),
         io          = require('socket.io').listen(server),
         redis       = require('redis'),
-        client      = redis.createClient(),
         crypto      = require('crypto'),
         q           = require('q'),
         yaml        = require('yamljs'),
         Encoder     = require('qr').Encoder,
-        encoder     = new Encoder;
+        encoder     = new Encoder,
+        client      = {};
+
+    // Create the Redis client.
+    if ($environment.REDISTOGO_URL) {
+        
+        // Client for Heroku.
+        var rtg = require('url').parse(process.env.REDISTOGO_URL);
+        client  = require('redis').createClient(rtg.port, rtg.hostname);
+        redis.auth(rtg.auth.split(':')[1]);
+        
+    } else {
+        
+        // Client for development.
+        client = require("redis").createClient();
+        
+    }
 
     // Begin Express so the statistics are available from the `localPort`.
     app.use(express.static(__dirname));
@@ -94,4 +109,4 @@
 
     });
 
-})(process);
+})(process, process.env);

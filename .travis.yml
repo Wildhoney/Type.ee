@@ -1,10 +1,17 @@
 language: node_js
 node_js:
-  - "0.10"
+- '0.10'
 before_script:
-  - npm install -g gulp
-  - npm install -g bower
+- npm install -g gulp
+- npm install -g bower
 script:
-  - npm install
-  - bower install
-  - gulp
+- npm install
+- bower install
+- gulp
+deploy:
+  provider: heroku
+  api_key:
+    secure: iVClImqtbTBvx41NX2ywP5dWjBwuma+6BsZzdIITT4KQ1X0DHza0iNXXe4J4VzlHsuJ6hlJJJRmGkFmfHqgBNgub+fKVpkdbesLyMYV3cj8mHcX7mQUwp6lyBJfEwvjIbwet69bb5E3tXzIxRdLwqq1NuRdBc5rHwTlfUtS8JDY=
+  app: type-ee
+    on:
+      repo: Wildhoney/Type.ee

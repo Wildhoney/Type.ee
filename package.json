@@ -6,7 +6,6 @@
   "scripts": {
     "test": "gulp lint",
     "start": "server.js",
-    "preinstall": "npm install --ignore-scripts",
     "postinstall": "bower install; gulp"
   },
   "repository": {

@@ -15,7 +15,8 @@
         crypto      = require('crypto'),
         q           = require('q'),
         yaml        = require('yamljs'),
-        encoder     = new require('qr').Encoder,
+        Encoder     = require('qr').Encoder,
+        encoder     = new Encoder,
         client      = {};
 
     // Create the Redis client.

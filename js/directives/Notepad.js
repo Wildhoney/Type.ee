@@ -33,7 +33,7 @@
             link: function link(scope, element) {
 
                 // Bind to the `onKeyUp` event which will save to Redis!
-                element.bind('keyup', function() {
+                element.bind('keyup input change', function() {
                     scope.save({ text: element.val() });
                     scope.$apply();
                 });

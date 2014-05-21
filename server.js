@@ -15,8 +15,7 @@
         crypto      = require('crypto'),
         q           = require('q'),
         yaml        = require('yamljs'),
-        Encoder     = require('qr').Encoder,
-        encoder     = new Encoder,
+        qr          = require('qr-image'),
         client      = {};
 
     // Create the Redis client.
@@ -72,16 +71,12 @@
                 var config = yaml.load('config.yml');
 
                 // Create the QR code to inherit the session.
-                var data = config.website_url + '#?session=' + sessionId;
-                encoder.encode(data, __dirname + '/images/' + sessionId + '.png');
+                var data  = config.website_url + '#?session=' + sessionId,
+                    pngQr = qr.image(data, { type: 'png' });
+                pngQr.pipe(require('fs').createWriteStream(__dirname + '/images/' + sessionId + '.png'));
 
-                encoder.on('end', function() {
-
-                    // Once the PNG has been written we'll emit the session ID.
-                    socket.emit('session/id', sessionId);
-
-                });
-
+                // Once the PNG has been written we'll emit the session ID.
+                socket.emit('session/id', sessionId);
 
             });
 

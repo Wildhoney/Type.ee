@@ -1,6 +1,6 @@
 {
   "name": "type.ee",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Source for Type.ee.",
   "main": "index.js",
   "scripts": {

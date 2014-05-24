@@ -8,6 +8,7 @@
     "use strict";
 
     var express     = require('express'),
+        expressIo   = require('express-io'),
         app         = express(),
         server      = require('http').createServer(app),
         io          = require('socket.io').listen(server),
@@ -33,7 +34,7 @@
         
     }
 
-    // Begin Express so the statistics are available from the `localPort`.
+    // Begin Express so we can listen for the HTTP requests.
     app.use(express.static(__dirname));
     server.listen($process.env.PORT || 3501);
 
@@ -41,7 +42,7 @@
 
         /**
          * @method createSession
-         * @return {q.promise}
+         * @return {Q.promise}
          */
         var createSession = function createSession() {
 

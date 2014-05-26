@@ -44,7 +44,7 @@
     // User is requesting the data for a given session.
     app.io.route('session/fetch', function sessionFetch(req) {
 
-        session.client.hget('type', params.sessionId, function(error, text) {
+        session.client.hget('type', req.data.sessionId, function(error, text) {
             req.io.emit('session/text', text || '');
         });
 
@@ -52,13 +52,13 @@
 
     // User is requesting to use a particular session ID.
     app.io.route('session/use', function sessionUse(req) {
-        req.io.join(req);
+        req.io.join(req.data);
     });
 
     // User is saving the text they have typed.
     app.io.route('session/save', function sessionSave(req) {
-        session.client.hset('type', req.sessionId, req.text);
-        req.io.room(req.sessionId).broadcast('session/text', params.text);
+        session.client.hset('type', req.sessionId, req.data.text);
+        req.io.room(req.data.sessionId).broadcast('session/text', req.data.text);
     });
 
 })(process, process.env);

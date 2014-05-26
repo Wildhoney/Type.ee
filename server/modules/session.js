@@ -6,7 +6,7 @@
  */
 (function Session($module) {
 
-    var crypto  = require('crypto');
+    var crypto = require('crypto');
 
     /**
      * @property Session

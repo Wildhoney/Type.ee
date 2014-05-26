@@ -52,7 +52,7 @@
 
     // User is requesting to use a particular session ID.
     app.io.route('session/use', function sessionUse(req) {
-        req.io.join(req.data);
+        req.io.join(req.data.sessionId);
     });
 
     // User is saving the text they have typed.

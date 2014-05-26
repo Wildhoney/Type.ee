@@ -60,7 +60,11 @@
 
         // When the session ID has changed.
         $scope.$watch('sessionId', function useSessionId(value) {
-            $scope.socket.emit('session/use', value);
+
+            $scope.socket.emit('session/use', {
+                sessionId: value
+            });
+
         });
 
         // Server has sent us back the session ID!

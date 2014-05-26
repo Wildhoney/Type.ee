@@ -11,15 +11,14 @@
     var express = require('express.io'),
         app     = express().http().io(),
         yaml    = require('yamljs'),
-        qr      = require('qr-image'),
-        q       = require('q');
+        qr      = require('qr-image');
 
     // Modules specific to the application.
     var redis = require('./modules/redis.js'),
         session = require('./modules/session.js');
 
     // Begin Express so we can listen for the HTTP requests.
-    app.use(express.static(__dirname));
+    app.use(express.static(__dirname + '/../'));
     app.listen($env.PORT || 3501);
 
     // User is requesting a new session.
@@ -32,7 +31,7 @@
             // Create the QR code to inherit the session.
             var data  = config.website_url + '#?session=' + sessionId,
                 pngQr = qr.image(data, { type: 'png' });
-            pngQr.pipe(require('fs').createWriteStream(__dirname + '/images/' + sessionId + '.png'));
+            pngQr.pipe(require('fs').createWriteStream(__dirname + '/../images/' + sessionId + '.png'));
 
             // Once the PNG has been written we'll emit the session ID.
             req.io.emit('session/id', sessionId);
@@ -44,7 +43,7 @@
     // User is requesting the data for a given session.
     app.io.route('session/fetch', function sessionFetch(req) {
 
-        session.client.hget('type', req.data.sessionId, function(error, text) {
+        redis.client.hget('type', req.data.sessionId, function(error, text) {
             req.io.emit('session/text', text || '');
         });
 
@@ -57,7 +56,7 @@
 
     // User is saving the text they have typed.
     app.io.route('session/save', function sessionSave(req) {
-        session.client.hset('type', req.sessionId, req.data.text);
+        redis.client.hset('type', req.data.sessionId, req.data.text);
         req.io.room(req.data.sessionId).broadcast('session/text', req.data.text);
     });
 

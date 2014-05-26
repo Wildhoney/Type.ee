@@ -116,6 +116,7 @@ section.task {
   height: 100%;
   display: table;
   text-align: center;
+  z-index: 11;
   pointer-events: none;
 }
 section.task div.row {

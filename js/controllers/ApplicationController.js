@@ -32,7 +32,7 @@
          * @type {Boolean}
          * @default false
          */
-        $scope.sidebarOpen = true;
+        $scope.sidebarOpen = false;
 
         // When the connection has been established we'll either use the existing session ID, or create
         // a new one.

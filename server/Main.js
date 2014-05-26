@@ -3,7 +3,7 @@
  * @author Adam Timberlake
  * @link http://github.com/Wildhoney/Type.ee
  */
-(function Main($process) {
+(function Main($process, $env) {
 
     "use strict";
 
@@ -20,7 +20,7 @@
 
     // Begin Express so we can listen for the HTTP requests.
     app.use(express.static(__dirname));
-    app.listen($process.env.PORT || 3501);
+    app.listen($env.PORT || 3501);
 
     // User is requesting a new session.
     app.io.route('session/create', function sessionCreate(req) {
@@ -61,4 +61,4 @@
         req.io.room(req.sessionId).broadcast('session/text', params.text);
     });
 
-})(process);
+})(process, process.env);

@@ -7,102 +7,95 @@
 
     "use strict";
 
-    var express     = require('express'),
-        expressIo   = require('express-io'),
-        app         = express(),
-        server      = require('http').createServer(app),
-        io          = require('socket.io').listen(server),
-        redis       = require('redis'),
-        crypto      = require('crypto'),
-        q           = require('q'),
-        yaml        = require('yamljs'),
-        qr          = require('qr-image'),
-        client      = {};
+    var express = require('express.io'),
+        redis   = require('redis'),
+        app     = express().http().io(),
+        yaml    = require('yamljs'),
+        qr      = require('qr-image'),
+        q       = require('q'),
+        crypto  = require('crypto'),
+        client  = {};
 
     // Create the Redis client.
     if ($environment.REDISTOGO_URL) {
-        
+
         // Client for Heroku.
         var rtg = require('url').parse(process.env.REDISTOGO_URL);
         client  = redis.createClient(rtg.port, rtg.hostname);
         client.auth(rtg.auth.split(':')[1]);
-        
+
     } else {
-        
+
         // Client for development.
         client = redis.createClient();
-        
+
     }
 
     // Begin Express so we can listen for the HTTP requests.
     app.use(express.static(__dirname));
-    server.listen($process.env.PORT || 3501);
+    app.listen($process.env.PORT || 3501);
 
-    io.sockets.on('connection', function connection(socket) {
+    /**
+     * @method createSession
+     * @return {Q.promise}
+     */
+    var createSession = function createSession() {
 
-        /**
-         * @method createSession
-         * @return {Q.promise}
-         */
-        var createSession = function createSession() {
+        var deferred = q.defer();
 
-            var deferred = q.defer();
+        crypto.randomBytes(256, function(error, buffer) {
 
-            crypto.randomBytes(256, function(error, buffer) {
+            if (error) {
+                throw error;
+            }
 
-                if (error) {
-                    throw error;
-                }
-
-                // Generate a SHA256 string from the random bytes.
-                var sessionId = crypto.createHash('sha256').update(buffer).digest('hex');
-                deferred.resolve(sessionId);
-
-            });
-
-            return deferred.promise;
-
-        };
-
-        // Establish a new session.
-        socket.on('session/create', function sessionCreate() {
-
-            createSession().then(function then(sessionId) {
-
-                var config = yaml.load('config.yml');
-
-                // Create the QR code to inherit the session.
-                var data  = config.website_url + '#?session=' + sessionId,
-                    pngQr = qr.image(data, { type: 'png' });
-                pngQr.pipe(require('fs').createWriteStream(__dirname + '/images/' + sessionId + '.png'));
-
-                // Once the PNG has been written we'll emit the session ID.
-                socket.emit('session/id', sessionId);
-
-            });
+            // Generate a SHA256 string from the random bytes.
+            var sessionId = crypto.createHash('sha256').update(buffer).digest('hex');
+            deferred.resolve(sessionId);
 
         });
 
-        // When the session needs to be retrieved.
-        socket.on('session/fetch', function sessionFetch(params) {
+        return deferred.promise;
 
-            client.hget('type', params.sessionId, function(error, text) {
-                socket.emit('session/text', text || '');
-            });
+    };
+
+    // User is requesting a new session.
+    app.io.route('session/create', function(req) {
+
+        createSession().then(function then(sessionId) {
+
+            var config = yaml.load('config.yml');
+
+            // Create the QR code to inherit the session.
+            var data  = config.website_url + '#?session=' + sessionId,
+                pngQr = qr.image(data, { type: 'png' });
+            pngQr.pipe(require('fs').createWriteStream(__dirname + '/images/' + sessionId + '.png'));
+
+            // Once the PNG has been written we'll emit the session ID.
+            req.io.emit('session/id', sessionId);
 
         });
 
-        // When the client has requested to use a particular session.
-        socket.on('session/use', function sessionUse(sessionId) {
-            socket.join(sessionId);
+    });
+
+    // User is requesting the data for a given session.
+    app.io.route('session/fetch', function sessionFetch(req) {
+
+        client.hget('type', params.sessionId, function(error, text) {
+            req.io.emit('session/text', text || '');
         });
 
-        // When the text has been pushed.
-        socket.on('session/save', function sessionSave(params) {
-            client.hset('type', params.sessionId, params.text);
-            socket.broadcast.to(params.sessionId).emit('session/text', params.text);
-        });
+    });
 
+    // User is requesting to use a particular session ID.
+    app.io.route('session/use', function sessionUse(req) {
+        req.io.join(req);
+    });
+
+    // User is saving the text they have typed.
+    app.io.route('session/save', function sessionSave(req) {
+        client.hset('type', req.sessionId, req.text);
+        req.io.room(req.sessionId).broadcast('session/text', params.text);
     });
 
 })(process, process.env);

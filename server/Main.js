@@ -25,7 +25,7 @@
     // User is requesting a new session.
     app.io.route('session/create', function sessionCreate(req) {
 
-        createSession().then(function then(sessionId) {
+        session.createSession().then(function then(sessionId) {
 
             var config = yaml.load('config.yml');
 

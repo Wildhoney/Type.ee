@@ -1,0 +1,35 @@
+section.sidebar {
+    border-right: 1px solid rgba(0, 0, 0, .1);
+    height: 100%;
+    position: fixed;
+    width: 20%;
+    overflow: hidden;
+
+    span.menu-icon {
+        font-size: 24px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        z-index: 5;
+    }
+
+    ul {
+        position: absolute;
+        top: 20px;
+        width: 100%;
+
+        li {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+            span {
+                margin-right: 3px;
+            }
+
+            a {
+                font-size: 12px;
+            }
+        }
+    }
+}

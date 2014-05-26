@@ -36,8 +36,7 @@
                 Menu <span class="caret"></span>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
-                <li><a href="#/share/qr-code">Share via QR Code</a></li>
-                <li><a href="#/share/url">Share via URL</a></li>
+                <!--<li><a href="#/share/url">Share via URL</a></li>-->
                 <!--<li class="divider"></li>-->
                 <!--<li><a href="#/create-session">Create Session</a></li>-->
             </ul>
@@ -53,6 +52,23 @@
                 <div class="view" data-close ng-view></div>
             </div>
         </div>
+    </section>
+
+    <section class="sidebar">
+
+        <span class="glyphicon glyphicon glyphicon-th-list menu-icon"></span>
+
+        <ul>
+            <li>
+                <span class="glyphicon glyphicon glyphicon-camera"></span>
+                <a href="#/share/qr-code">Share via QR Code</a>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-magnet"></span>
+                <a href="#/share/url">Share via URL</a>
+            </li>
+        </ul>
+
     </section>
 
     <section class="notepad" ng-controller="NotepadController">

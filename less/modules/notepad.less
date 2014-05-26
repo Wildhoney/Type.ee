@@ -1,10 +1,21 @@
+@transitionDuration: .25s;
+@collapsedSidebarWidth: 55px;
+
 section.notepad {
     height: 100%;
+    -webkit-transition: all @transitionDuration;
     margin-left: 20%;
-    float: left;
     width: 80%;
     overflow: hidden;
     pointer-events: none;
+    position: absolute;
+
+    &.extended {
+        margin-left: @collapsedSidebarWidth;
+        padding-left: @collapsedSidebarWidth;
+        width: 100%;
+        right: 0;
+    }
 
     textarea.notepad {
         width: 100%;

@@ -29,21 +29,6 @@
 </head>
 <body ng-app="typeApp" ng-controller="ApplicationController" ng-class="{ loaded: sessionId }">
 
-    <section class="dashboard">
-
-        <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
-                Menu <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu pull-right" role="menu">
-                <!--<li><a href="#/share/url">Share via URL</a></li>-->
-                <!--<li class="divider"></li>-->
-                <!--<li><a href="#/create-session">Create Session</a></li>-->
-            </ul>
-        </div>
-
-    </section>
-
     <label class="loading">Loading...</label>
 
     <section class="task">
@@ -54,9 +39,9 @@
         </div>
     </section>
 
-    <section class="sidebar">
+    <section class="sidebar" ng-class="{ open: sidebarOpen }">
 
-        <span class="glyphicon glyphicon glyphicon-th-list menu-icon"></span>
+        <span ng-click="sidebarOpen = !sidebarOpen" class="glyphicon glyphicon glyphicon-th-list menu-icon"></span>
 
         <ul>
             <li>
@@ -71,7 +56,8 @@
 
     </section>
 
-    <section class="notepad" ng-controller="NotepadController">
+    <section class="notepad" ng-controller="NotepadController"
+                             ng-class="{ extended: sidebarOpen }">
 
         <textarea class="notepad" ng-model="text"
                   data-notepad="text"

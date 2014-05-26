@@ -27,6 +27,13 @@
          */
         $scope.sessionId = '';
 
+        /**
+         * @property sidebarOpen
+         * @type {Boolean}
+         * @default false
+         */
+        $scope.sidebarOpen = true;
+
         // When the connection has been established we'll either use the existing session ID, or create
         // a new one.
         $scope.socket.on('connect', function onConnection() {

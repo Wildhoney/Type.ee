@@ -1,20 +1,35 @@
+@transitionDuration: .25s;
+@collapsedSidebarWidth: 55px;
+
 section.sidebar {
     border-right: 1px solid rgba(0, 0, 0, .1);
+    -webkit-transition: all @transitionDuration;
     height: 100%;
-    position: fixed;
     width: 20%;
+    position: fixed;
     overflow: hidden;
+    z-index: 10;
+
+    &.open {
+        left: -100px;
+        width: (100px + @collapsedSidebarWidth);
+
+        ul {
+            opacity: 0;
+        }
+    }
 
     span.menu-icon {
         font-size: 24px;
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 15px;
+        right: 15px;
         cursor: pointer;
         z-index: 5;
     }
 
     ul {
+        -webkit-transition: opacity @transitionDuration;
         position: absolute;
         top: 20px;
         width: 100%;

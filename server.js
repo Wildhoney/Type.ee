@@ -60,7 +60,7 @@
     };
 
     // User is requesting a new session.
-    app.io.route('session/create', function(req) {
+    app.io.route('session/create', function sessionCreate(req) {
 
         createSession().then(function then(sessionId) {
 

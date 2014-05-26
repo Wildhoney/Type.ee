@@ -3,38 +3,24 @@
  * @author Adam Timberlake
  * @link http://github.com/Wildhoney/Type.ee
  */
-(function Main($process, $environment) {
+(function Main($process) {
 
     "use strict";
 
+    // External dependencies for the Node.js server.
     var express = require('express.io'),
-        redis   = require('redis'),
         app     = express().http().io(),
         yaml    = require('yamljs'),
         qr      = require('qr-image'),
-        q       = require('q'),
-        client  = {};
+        q       = require('q');
 
-    // Create the Redis client.
-    if ($environment.REDISTOGO_URL) {
-
-        // Client for Heroku.
-        var rtg = require('url').parse(process.env.REDISTOGO_URL);
-        client  = redis.createClient(rtg.port, rtg.hostname);
-        client.auth(rtg.auth.split(':')[1]);
-
-    } else {
-
-        // Client for development.
-        client = redis.createClient();
-
-    }
+    // Modules specific to the application.
+    var redis = require('./modules/redis.js'),
+        session = require('./modules/session.js');
 
     // Begin Express so we can listen for the HTTP requests.
     app.use(express.static(__dirname));
     app.listen($process.env.PORT || 3501);
-
-
 
     // User is requesting a new session.
     app.io.route('session/create', function sessionCreate(req) {
@@ -58,7 +44,7 @@
     // User is requesting the data for a given session.
     app.io.route('session/fetch', function sessionFetch(req) {
 
-        client.hget('type', params.sessionId, function(error, text) {
+        session.client.hget('type', params.sessionId, function(error, text) {
             req.io.emit('session/text', text || '');
         });
 
@@ -71,8 +57,8 @@
 
     // User is saving the text they have typed.
     app.io.route('session/save', function sessionSave(req) {
-        client.hset('type', req.sessionId, req.text);
+        session.client.hset('type', req.sessionId, req.text);
         req.io.room(req.sessionId).broadcast('session/text', params.text);
     });
 
-})(process, process.env);
+})(process);

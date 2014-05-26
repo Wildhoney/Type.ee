@@ -3,7 +3,7 @@
  * @author Adam Timberlake
  * @link http://github.com/Wildhoney/Type.ee
  */
-(function($process, $environment) {
+(function Main($process, $environment) {
 
     "use strict";
 
@@ -13,7 +13,6 @@
         yaml    = require('yamljs'),
         qr      = require('qr-image'),
         q       = require('q'),
-        crypto  = require('crypto'),
         client  = {};
 
     // Create the Redis client.
@@ -35,29 +34,7 @@
     app.use(express.static(__dirname));
     app.listen($process.env.PORT || 3501);
 
-    /**
-     * @method createSession
-     * @return {Q.promise}
-     */
-    var createSession = function createSession() {
 
-        var deferred = q.defer();
-
-        crypto.randomBytes(256, function(error, buffer) {
-
-            if (error) {
-                throw error;
-            }
-
-            // Generate a SHA256 string from the random bytes.
-            var sessionId = crypto.createHash('sha256').update(buffer).digest('hex');
-            deferred.resolve(sessionId);
-
-        });
-
-        return deferred.promise;
-
-    };
 
     // User is requesting a new session.
     app.io.route('session/create', function sessionCreate(req) {

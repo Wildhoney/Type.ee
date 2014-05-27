@@ -14,12 +14,9 @@
         mongoose = require('mongoose'),
         qr       = require('qr-image');
 
-    // Connect to MongoDB, and create the model for the text entry.
-    mongoose.connect($env.MONGOHQ_URL || 'mongodb://localhost/type-ee');
-    var Text = mongoose.model('Text', { sessionId: String, text: String, clients: Array });
-
     // Modules specific to the application.
-    var session = require('./modules/session.js');
+    var session = require('./modules/session.js'),
+        mongo   = require('./modules/mongo.js');
 
     // Begin Express so we can listen for the HTTP requests.
     app.use(express.static(__dirname + '/../'));
@@ -31,7 +28,7 @@
         session.createSession().then(function then(sessionId) {
 
             var config = yaml.load('config.yml'),
-                model  = new Text({ sessionId: sessionId, text: '', clients: [] });
+                model  = mongo.createModel({ sessionId: sessionId, text: '', clients: [] });
 
             // Create the entry in Mongo.
             model.save(function save(error) {
@@ -60,7 +57,7 @@
     // User is requesting the data for a given session.
     app.io.route('session/fetch', function sessionFetch(req) {
 
-        Text.findOne({ sessionId: req.data.sessionId }, function findText(error, model) {
+        mongo.getModel(req.data.sessionId).then(function then(model) {
             req.io.emit('session/data', model || '');
         });
 
@@ -74,11 +71,13 @@
     // User is saving the text they have typed.
     app.io.route('session/save', function sessionSave(req) {
 
-        Text.findOne({ sessionId: req.data.sessionId }, function findText(error, model) {
+        mongo.getModel(req.data.sessionId).then(function then(model) {
 
+            // Asynchoronously save to the MongoDB collection.
             model.text = req.data.text;
             model.save();
 
+            // ...And then emit to all clients who have joined the session's room.
             req.io.room(req.data.sessionId).broadcast('session/text', req.data.text);
 
         });

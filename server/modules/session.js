@@ -6,6 +6,8 @@
  */
 (function Session($module) {
 
+    "use strict";
+
     var crypto = require('crypto'),
         q      = require('q');
 

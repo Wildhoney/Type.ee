@@ -15,7 +15,7 @@
         qr       = require('qr-image');
 
     // Connect to MongoDB, and create the model for the text entry.
-    mongoose.connect('mongodb://localhost/type-ee');
+    mongoose.connect($env.MONGOHQ_URL || 'mongodb://localhost/type-ee');
     var Text = mongoose.model('Text', { sessionId: String, text: String, clients: Array });
 
     // Modules specific to the application.

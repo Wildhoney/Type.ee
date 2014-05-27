@@ -33,8 +33,6 @@
          */
         $scope.sidebarOpen = ($localStorage.getItem('sidebarOpen') === 'open');
 
-        console.log($scope.sidebarOpen);
-
         /**
          * @method toggleSidebar
          * @return {void}

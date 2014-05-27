@@ -68,6 +68,18 @@
 
         };
 
+        /**
+         * @method fetchSession
+         * @return {void}
+         */
+        $scope.fetchSession = function fetchSession() {
+
+            $scope.socket.emit('session/fetch', {
+                sessionId: $scope.sessionId
+            });
+
+        };
+
         // When the connection has been established we'll either use the existing session ID, or create
         // a new one.
         $scope.socket.on('connect', function onConnection() {
@@ -85,10 +97,7 @@
 
                 }
 
-                $scope.socket.emit('session/fetch', {
-                    sessionId: $scope.sessionId
-                });
-
+                $scope.fetchSession();
                 $scope.$apply();
                 return;
 
@@ -111,9 +120,13 @@
 
         // Server has sent us back the session ID!
         $scope.socket.on('session/id', function getSessionId(sessionId) {
+
             $scope.pushSession(sessionId);
             $scope.sessionId = sessionId;
             $scope.$apply();
+
+            $scope.fetchSession();
+
         });
 
         /**

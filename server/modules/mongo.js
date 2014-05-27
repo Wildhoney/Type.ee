@@ -4,7 +4,7 @@
  * @author Adam Timberlake
  * @link http://github.com/Wildhoney/Type.ee
  */
-(function Mongo($module, $env) {
+(function MongoModule($module, $env) {
 
     "use strict";
 
@@ -53,7 +53,7 @@
          */
         getModel: function getModel(sessionId) {
 
-            var deferred = q.defer();
+            var deferred = Q.defer();
 
             this.TextModel.findOne({ sessionId: sessionId }, function findText(error, model) {
 

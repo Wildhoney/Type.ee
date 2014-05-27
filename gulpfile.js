@@ -19,7 +19,8 @@
     });
 
     gulp.task('lint', function beginGulpLint() {
-        return gulp.src(['js/controllers/*.js', 'js/directives/*.js', 'js/Default.js'])
+        return gulp.src(['js/controllers/*.js', 'js/directives/*.js', 'js/Default.js',
+                         'server/**/*.js', 'server/default.js'])
             .pipe(jshint())
             .pipe(jshint.reporter('default'));
     });

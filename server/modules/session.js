@@ -4,7 +4,7 @@
  * @author Adam Timberlake
  * @link http://github.com/Wildhoney/Type.ee
  */
-(function Session($module) {
+(function SessionModule($module) {
 
     "use strict";
 
@@ -15,7 +15,7 @@
      * @property Session
      * @constructor
      */
-    var Session = function Session() {};
+    var Session = function SessionKlass() {};
 
     /**
      * @property prototype

@@ -4,7 +4,7 @@
  * @author Adam Timberlake
  * @link http://github.com/Wildhoney/Type.ee
  */
-(function QR($module) {
+(function QRModule($module) {
 
     "use strict";
 

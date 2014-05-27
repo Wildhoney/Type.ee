@@ -107,6 +107,14 @@ section.sidebar ul li span {
 section.sidebar ul li a {
   font-size: 12px;
 }
+section.sidebar ul li.title {
+  background: -webkit-linear-gradient(top, #f7f7f7 0%, #eeeeee 100%);
+}
+section.sidebar ul li.clients {
+  padding-top: 12px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
 
 section.task {
   position: absolute;

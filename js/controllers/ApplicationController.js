@@ -22,6 +22,12 @@
         $scope.socket = io.connect();
 
         /**
+         * @property model
+         * @type {Object}
+         */
+        $scope.model = {};
+
+        /**
          * @property sessionId
          * @type {String}
          */

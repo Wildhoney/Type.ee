@@ -23,8 +23,12 @@
 
         // Once we've retrieved the data from the session.
         $scope.socket.on('session/data', function sessionText(model) {
-            $scope.$parent.model = model;
-            $scope.$parent.model.clients = $scope.parseUserAgents(model.clients);
+
+            $scope.$parent.model = {
+                text:    model.text,
+                clients: $scope.parseUserAgents(model.clients)
+            };
+
             $scope.$apply();
         });
 

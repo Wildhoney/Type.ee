@@ -53,7 +53,7 @@
          */
         getModel: function getModel(sessionId) {
 
-            var deferred = Q.defer();
+            var deferred = q.defer();
 
             this.TextModel.findOne({ sessionId: sessionId }, function findText(error, model) {
 

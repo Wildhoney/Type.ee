@@ -10,13 +10,12 @@
     // External dependencies for the Node.js server.
     var express  = require('express.io'),
         app      = express().http().io(),
-        yaml     = require('yamljs'),
-        mongoose = require('mongoose'),
-        qr       = require('qr-image');
+        mongoose = require('mongoose');
 
     // Modules specific to the application.
     var session = require('./modules/session.js'),
-        mongo   = require('./modules/mongo.js');
+        mongo   = require('./modules/mongo.js'),
+        qr      = require('./modules/qr.js');
 
     // Begin Express so we can listen for the HTTP requests.
     app.use(express.static(__dirname + '/../'));
@@ -27,23 +26,13 @@
 
         session.createSession().then(function then(sessionId) {
 
-            var config = yaml.load('config.yml'),
-                model  = mongo.createModel({ sessionId: sessionId, text: '', clients: [] });
+            var model = mongo.createModel({ sessionId: sessionId, text: '', clients: [] });
 
             // Create the entry in Mongo.
-            model.save(function save(error) {
-
-                if (error) {
-
-                    // We discovered an error!
-                    throw error;
-
-                }
+            model.save(function save() {
 
                 // Create the QR code to inherit the session.
-                var data  = config.website_url + '#?session=' + sessionId,
-                    pngQr = qr.image(data, { type: 'png' });
-                pngQr.pipe(require('fs').createWriteStream(__dirname + '/../images/' + sessionId + '.png'));
+                qr.createImage(sessionId);
 
                 // Once the PNG has been written we'll emit the session ID.
                 req.io.emit('session/id', sessionId);

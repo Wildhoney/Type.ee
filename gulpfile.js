@@ -4,14 +4,13 @@
         less       = require('gulp-less'),
         concat     = require('gulp-concat'),
         jshint     = require('gulp-jshint'),
-        ngConstant = require('gulp-ng-constant'),
         path       = require('path');
 
     gulp.task('less', function beginGulpLess() {
 
         return gulp.src('./less/**/*.less')
             .pipe(less({
-                paths: [ path.join(__dirname, 'less') ]
+                paths: [path.join(__dirname, 'less')]
             }))
             .pipe(concat('default.css'))
             .pipe(gulp.dest(path.join(__dirname, 'css')))

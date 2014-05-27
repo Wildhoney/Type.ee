@@ -47,6 +47,21 @@
         },
 
         /**
+         * @method addClient
+         * @param sessionId {String}
+         * @param name {String}
+         * @return {void}
+         */
+        addClient: function addClient(sessionId, name) {
+
+            this.getModel(sessionId).then(function then(model) {
+                model.clients.addToSet(name);
+                model.save();
+            });
+
+        },
+
+        /**
          * @method getModel
          * @param sessionId {String}
          * @return {Q.promise}

@@ -54,7 +54,11 @@
 
     // User is requesting to use a particular session ID.
     app.io.route('session/use', function sessionUse(req) {
+
+        // Join the socket room, and add the client to the set.
         req.io.join(req.data.sessionId);
+        mongo.addClient(req.data.sessionId, req.data.userAgent);
+
     });
 
     // User is saving the text they have typed.

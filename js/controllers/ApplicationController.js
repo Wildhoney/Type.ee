@@ -1,4 +1,4 @@
-(function($app, $angular, $localStorage) {
+(function($app, $angular, $localStorage, $navigator) {
 
     /**
      * @module Type.ee
@@ -80,7 +80,8 @@
         $scope.$watch('sessionId', function useSessionId(value) {
 
             $scope.socket.emit('session/use', {
-                sessionId: value
+                sessionId: value,
+                userAgent: $navigator.userAgent
             });
 
         });
@@ -121,4 +122,4 @@
 
     }]);
 
-})(window.typeApp, window.angular, window.localStorage);
+})(window.typeApp, window.angular, window.localStorage, window.navigator);

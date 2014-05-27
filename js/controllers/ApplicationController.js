@@ -1,4 +1,4 @@
-(function($app, $angular, $localStorage, $navigator) {
+(function($app, $angular, $localStorage, $navigator, $parser) {
 
     /**
      * @module Type.ee
@@ -48,6 +48,23 @@
             // Toggle the sidebar open and save the local storage.
             $scope.sidebarOpen = !$scope.sidebarOpen;
             $localStorage.setItem('sidebarOpen', $scope.sidebarOpen ? 'open' : 'closed');
+
+        };
+
+        /**
+         * @method parseUserAgents
+         * @param userAgents {Array}
+         * @return {Array}
+         */
+        $scope.parseUserAgents = function parseUserAgents(userAgents) {
+
+            var parser = new $parser();
+
+            // Parse each user agent string into its components.
+            return _.map(userAgents, function map(userAgent) {
+                parser.setUA(userAgent);
+                return parser.getResult();
+            });
 
         };
 
@@ -128,4 +145,4 @@
 
     }]);
 
-})(window.typeApp, window.angular, window.localStorage, window.navigator);
+})(window.typeApp, window.angular, window.localStorage, window.navigator, window.UAParser);

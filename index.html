@@ -15,6 +15,7 @@
     <script type="text/javascript" src="js/vendor/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="js/vendor/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="js/vendor/underscore/underscore.js"></script>
+    <script type="text/javascript" src="js/vendor/ua-parser-js/src/ua-parser.js"></script>
     <script type="text/javascript" src="js/vendor/angular/angular.js"></script>
     <script type="text/javascript" src="js/vendor/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="js/vendor/socket.io-client/dist/socket.io.js"></script>
@@ -55,10 +56,24 @@
             <li class="title">
                 Session
             </li>
+
             <li class="clients">
                 <span class="glyphicon glyphicon-share-alt"></span>
-                Shared with {{model.clients.length}} people.
+
+                Shared with
+
+                <ng-pluralize count="model.clients.length || 1"
+                              when="{'1': '1 person.',
+                                     '2': '{} people.'}">
+                </ng-pluralize>
+
             </li>
+
+            <li ng-repeat="client in model.clients">
+                <span class="glyphicon glyphicon-globe"></span>
+                {{client.browser.name}} {{client.browser.version}}
+            </li>
+
         </ul>
 
     </section>

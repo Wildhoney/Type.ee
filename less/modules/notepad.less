@@ -10,7 +10,7 @@ section.notepad {
     pointer-events: none;
     position: absolute;
 
-    &.extended {
+    &:not(.extended) {
         margin-left: @collapsedSidebarWidth;
         padding-left: @collapsedSidebarWidth;
         width: 100%;

@@ -41,7 +41,7 @@
 
     <section class="sidebar" ng-class="{ open: sidebarOpen }">
 
-        <span ng-click="sidebarOpen = !sidebarOpen" class="glyphicon glyphicon glyphicon-th-list menu-icon"></span>
+        <span ng-click="toggleSidebar()" class="glyphicon glyphicon glyphicon-th-list menu-icon"></span>
 
         <ul>
             <li>
@@ -59,7 +59,7 @@
     <section class="notepad" ng-controller="NotepadController"
                              ng-class="{ extended: sidebarOpen }">
 
-        <textarea class="notepad" ng-model="text"
+        <textarea class="notepad" ng-model="model.text"
                   data-notepad="text"
                   data-loaded="!!sessionId"
                   data-save="save({ text: text })"></textarea>

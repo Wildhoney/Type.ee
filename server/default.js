@@ -61,7 +61,7 @@
     app.io.route('session/fetch', function sessionFetch(req) {
 
         Text.findOne({ sessionId: req.data.sessionId }, function findText(error, model) {
-            req.io.emit('session/text', model.text || '');
+            req.io.emit('session/data', model || '');
         });
 
     });

@@ -30,9 +30,22 @@
         /**
          * @property sidebarOpen
          * @type {Boolean}
-         * @default false
          */
-        $scope.sidebarOpen = false;
+        $scope.sidebarOpen = ($localStorage.getItem('sidebarOpen') === 'open');
+
+        console.log($scope.sidebarOpen);
+
+        /**
+         * @method toggleSidebar
+         * @return {void}
+         */
+        $scope.toggleSidebar = function toggleSidebar() {
+
+            // Toggle the sidebar open and save the local storage.
+            $scope.sidebarOpen = !$scope.sidebarOpen;
+            $localStorage.setItem('sidebarOpen', $scope.sidebarOpen ? 'open' : 'closed');
+
+        };
 
         // When the connection has been established we'll either use the existing session ID, or create
         // a new one.

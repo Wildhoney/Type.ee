@@ -10,7 +10,7 @@ section.sidebar {
     overflow: hidden;
     z-index: 10;
 
-    &.open {
+    &:not(.open) {
         left: -100px;
         width: (100px + @collapsedSidebarWidth);
 

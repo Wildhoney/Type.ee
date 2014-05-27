@@ -8,10 +8,10 @@
     $app.controller('NotepadController', ['$scope', function notepadController($scope) {
 
         /**
-         * @property $scope.text
-         * @type {String}
+         * @property model
+         * @type {Object}
          */
-        $scope.text = '';
+        $scope.model = {};
 
         /**
          * @method save
@@ -28,8 +28,8 @@
         };
 
         // Once we've retrieved the data from the session.
-        $scope.socket.on('session/text', function sessionText(text) {
-            $scope.text = text;
+        $scope.socket.on('session/data', function sessionText(model) {
+            $scope.model = model;
             $scope.$apply();
         });
 

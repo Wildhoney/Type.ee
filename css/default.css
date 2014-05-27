@@ -46,7 +46,7 @@ section.notepad {
   pointer-events: none;
   position: absolute;
 }
-section.notepad.extended {
+section.notepad:not(.extended) {
   margin-left: 55px;
   padding-left: 55px;
   width: 100%;
@@ -76,11 +76,11 @@ section.sidebar {
   overflow: hidden;
   z-index: 10;
 }
-section.sidebar.open {
+section.sidebar:not(.open) {
   left: -100px;
   width: 155px;
 }
-section.sidebar.open ul {
+section.sidebar:not(.open) ul {
   opacity: 0;
 }
 section.sidebar span.menu-icon {

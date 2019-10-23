@@ -28,7 +28,7 @@
     "gulp-concat": "^2.2.0",
     "gulp-jshint": "^1.6.1",
     "gulp-less": "^1.2.3",
-    "mongoose": "^3.8.11",
+    "mongoose": "^5.7.6",
     "q": "^1.0.1",
     "qr-image": "^1.1.0",
     "socket.io": "^0.9.16",
